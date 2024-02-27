@@ -12,14 +12,14 @@ set(ABSL_ENABLE_INSTALL ${RTTB_ENABLE_INSTALL})
 FetchContent_Declare(
         abseil
         GIT_REPOSITORY https://github.com/abseil/abseil-cpp
-        GIT_TAG        lts_2023_01_25
+        GIT_TAG lts_2023_01_25
         FIND_PACKAGE_ARGS NAMES absl
 )
 
 FetchContent_Declare(
         googletest
         GIT_REPOSITORY https://github.com/google/googletest
-        GIT_TAG        v1.13.0
+        GIT_TAG v1.13.0
         FIND_PACKAGE_ARGS NAMES GTest
 )
 
@@ -27,12 +27,14 @@ FetchContent_MakeAvailable(abseil googletest)
 
 file(GLOB_RECURSE src "lib/*.hpp" "lib/*.cpp")
 
-add_library(${PROJECT_NAME} ${src})
+add_library(${PROJECT_NAME} INTERFACE)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC absl::flat_hash_set)
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
-target_include_directories(${PROJECT_NAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/lib>
+target_link_libraries(${PROJECT_NAME} INTERFACE absl::flat_hash_set)
+
+target_include_directories(${PROJECT_NAME} INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
         )
 

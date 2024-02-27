@@ -9,8 +9,8 @@ static_assert(!tnl::has_type_name_v<D>);
 TEST(type_name, general) {
 	init();
 	
-	ASSERT_EQ(tnl::type_name<A>(), "A");
-	ASSERT_EQ(tnl::type_name<B>(), "B_");
-	ASSERT_EQ(tnl::type_name<C>(), "C");
-	ASSERT_EQ(tnl::type_name<D>(), "unknown type");
+	ASSERT_STREQ(tnl::type_name<A>().data(), "A");
+	ASSERT_STREQ(tnl::type_name<B>().data(), "B_");
+	ASSERT_STREQ(tnl::type_name<C>().data(), "C");
+	ASSERT_STREQ(tnl::type_name<D>().data(), "unknown type");
 }
