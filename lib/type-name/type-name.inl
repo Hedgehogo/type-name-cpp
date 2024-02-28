@@ -11,7 +11,12 @@ namespace tnl {
 			return {*names.cbegin()};
 		}
 		if constexpr(has_type_name_v<T_>) {
-			return TypeName<T_>::type_name();
+			using Return = std::remove_cv_t<decltype(TypeName<T_>::type_name)>;
+			if constexpr(std::is_same_v<Return, StringView>) {
+				return TypeName<T_>::type_name;
+			} else {
+				return TypeName<T_>::type_name();
+			}
 		}
 		return {"unknown type"};
 	}

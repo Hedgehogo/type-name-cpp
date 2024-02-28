@@ -15,7 +15,7 @@ class B {
 
 template<>
 struct tnl::TypeName<B> {
-	static auto type_name() -> tnl::StringView;
+	constexpr static auto type_name = tnl::StringView{"B_"};
 };
 
 class C {

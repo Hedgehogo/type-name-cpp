@@ -17,6 +17,10 @@ namespace tnl {
 		template<typename T_>
 		struct HasTypeName<T_, decltype(T_::type_name())> : std::true_type {
 		};
+		
+		template<typename T_>
+		struct HasTypeName<T_, std::remove_cv_t<decltype(T_::type_name)> > : std::true_type {
+		};
 	}
 	
 	template<typename T_>
